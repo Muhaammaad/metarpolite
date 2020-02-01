@@ -8,6 +8,10 @@ import androidx.databinding.ObservableArrayList;
 import androidx.lifecycle.AndroidViewModel;
 import com.muhaammaad.metarpolite.model.AviationResponse;
 import com.muhaammaad.metarpolite.model.METAR;
+import com.muhaammaad.metarpolite.model.type.CountryType;
+import com.muhaammaad.metarpolite.model.type.DataSourceType;
+import com.muhaammaad.metarpolite.model.type.FormatType;
+import com.muhaammaad.metarpolite.model.type.RequestType;
 import com.muhaammaad.metarpolite.network.NetworkModule;
 import com.muhaammaad.metarpolite.ui.main.util.AviationResponseParser;
 import io.reactivex.Observable;
@@ -44,11 +48,11 @@ public class MainViewModel extends AndroidViewModel implements Observer<Aviation
      * Gets the data of all stations and metars. Once fetched, both are zipped into {@link #mAviationResponse}.
      */
     private void getAviationData() {
-        Observable<ResponseBody> observableMetar = NetworkModule.getInstance().provideNetworkApi().getMetarsData()
+        Observable<ResponseBody> observableMetar = NetworkModule.getInstance().provideNetworkApi().getAviationData(DataSourceType.Metars.toString(), RequestType.Retrieve.toString(), FormatType.XML.toString(), CountryType.GERMANY.toStringWtihTilda(), "1")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
 
-        Observable<ResponseBody> observableStations = NetworkModule.getInstance().provideNetworkApi().getStationsData()
+        Observable<ResponseBody> observableStations = NetworkModule.getInstance().provideNetworkApi().getAviationData(DataSourceType.Stations.toString(), RequestType.Retrieve.toString(), FormatType.XML.toString(), CountryType.GERMANY.toStringWtihTilda(), "1")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
 
