@@ -11,8 +11,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.muhaammaad.metarpolite.R;
 import com.muhaammaad.metarpolite.databinding.MetarListItemBinding;
-import com.muhaammaad.metarpolite.model.METAR;
-import com.muhaammaad.metarpolite.model.Station;
+import com.muhaammaad.metarpolite.persistence.entity.Metar;
+import com.muhaammaad.metarpolite.persistence.entity.Station;
 
 import java.util.ArrayList;
 //endregion
@@ -24,7 +24,7 @@ public class MetarDataAdapter
         extends RecyclerView.Adapter<MetarDataAdapter.MetarViewHolder> {
 
     //region Global members
-    private ArrayList<METAR> metars;
+    private ArrayList<Metar> metars;
     //endregion
 
     @NonNull
@@ -38,7 +38,7 @@ public class MetarDataAdapter
 
     @Override
     public void onBindViewHolder(@NonNull MetarViewHolder metarViewHolder, int i) {
-        METAR currentStudent = metars.get(i);
+        Metar currentStudent = metars.get(i);
         metarViewHolder.metarListItemBinding.setMetar(currentStudent);
     }
 
@@ -47,7 +47,7 @@ public class MetarDataAdapter
         return metars != null ? metars.size() : 0;
     }
 
-    public void setMetars(ArrayList<METAR> metars) {
+    public void setMetars(ArrayList<Metar> metars) {
         this.metars = metars;
         notifyDataSetChanged();
     }

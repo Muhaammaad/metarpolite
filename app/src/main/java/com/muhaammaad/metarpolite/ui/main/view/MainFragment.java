@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.muhaammaad.metarpolite.R;
 import com.muhaammaad.metarpolite.databinding.MainFragmentBinding;
-import com.muhaammaad.metarpolite.model.METAR;
+import com.muhaammaad.metarpolite.persistence.entity.Metar;
 import com.muhaammaad.metarpolite.ui.main.adapter.MetarDataAdapter;
 import com.muhaammaad.metarpolite.ui.main.viewmodel.MainViewModel;
 
@@ -58,7 +58,7 @@ public class MainFragment extends Fragment {
      * @param metars metars list which were observed by the {@param view}
      */
     @BindingAdapter("items")
-    public static void setItems(@NonNull RecyclerView view, ArrayList<METAR> metars) {
+    public static void setItems(@NonNull RecyclerView view, ArrayList<Metar> metars) {
         MetarDataAdapter adapter = (MetarDataAdapter) view.getAdapter();
         if (adapter == null)
             return;

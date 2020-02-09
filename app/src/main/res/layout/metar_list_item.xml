@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="metar"
-                type="com.muhaammaad.metarpolite.model.METAR"/>
+                type="com.muhaammaad.metarpolite.persistence.entity.Metar"/>
 
     </data>
     <LinearLayout
@@ -39,9 +39,8 @@
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"
                         bind:layout_constraintEnd_toStartOf="@+id/tvCategory"
-
                         bind:layout_constraintTop_toTopOf="parent"
-                        tools:text="Morris"/>
+                        tools:text="StationId"/>
                 <TextView
                         android:id="@+id/tvCategory"
                         android:layout_width="0dp"
@@ -51,11 +50,12 @@
                         android:layout_marginTop="8dp"
                         android:text="@{metar.flightCategory}"
                         android:padding="4dp"
-                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
                         android:textSize="18sp"
                         bind:layout_constraintEnd_toEndOf="parent"
                         bind:layout_constraintTop_toTopOf="parent"
-                        tools:text="Morris"/>
+                        tools:text="Category"/>
 
                 <TextView
                         android:id="@+id/tvFullName"
@@ -65,12 +65,15 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:padding="4dp"
+                        android:singleLine="true"
+                        android:ellipsize="end"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"
                         bind:station_name="@{metar.station}"
                         bind:layout_constraintStart_toStartOf="parent"
+                        bind:layout_constraintEnd_toStartOf="@+id/tvStationId"
                         bind:layout_constraintTop_toTopOf="parent"
-                        tools:text="Morris"/>
+                        tools:text="FullName"/>
 
                 <TextView
                         android:id="@+id/tvVissibility"
@@ -86,7 +89,7 @@
                         android:textSize="16sp"
                         bind:layout_constraintTop_toBottomOf="@+id/tvFullName"
                         bind:layout_constraintStart_toStartOf="parent"
-                        tools:text="morris@gmail.com"/>
+                        tools:text="Visibility"/>
 
 
                 <TextView
@@ -103,7 +106,7 @@
                         android:textSize="16sp"
                         bind:layout_constraintTop_toBottomOf="@+id/tvCategory"
                         bind:layout_constraintEnd_toEndOf="parent"
-                        tools:text="morris@gmail.com"/>
+                        tools:text="Temp"/>
 
                 <TextView
                         android:id="@+id/tvTime"
@@ -114,12 +117,12 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="4dp"
                         android:padding="4dp"
-                        android:text="@{metar.observationTime}"
+                        android:text="@{metar.getTime()}"
                         android:textColor="@color/colorAccent"
                         android:textSize="16sp"
                         bind:layout_constraintTop_toBottomOf="@+id/tvTemp"
                         bind:layout_constraintEnd_toEndOf="parent"
-                        tools:text="morris@gmail.com"/>
+                        tools:text="Time"/>
                 <!--<TextView-->
                 <!--android:id="@+id/tvWind"-->
                 <!--android:layout_width="0dp"-->
