@@ -5,14 +5,17 @@ package com.muhaammaad.metarpolite.ui.main.adapter;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.muhaammaad.metarpolite.R;
 import com.muhaammaad.metarpolite.databinding.MetarListItemBinding;
 import com.muhaammaad.metarpolite.persistence.entity.Metar;
 import com.muhaammaad.metarpolite.persistence.entity.Station;
+import com.muhaammaad.metarpolite.ui.main.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
 //endregion
@@ -25,6 +28,11 @@ public class MetarDataAdapter
 
     //region Global members
     private ArrayList<Metar> metars;
+    private MainViewModel viewModel;
+
+    public MetarDataAdapter(MainViewModel context) {
+        viewModel = context;
+    }
     //endregion
 
     @NonNull
@@ -38,8 +46,10 @@ public class MetarDataAdapter
 
     @Override
     public void onBindViewHolder(@NonNull MetarViewHolder metarViewHolder, int i) {
-        Metar currentStudent = metars.get(i);
-        metarViewHolder.metarListItemBinding.setMetar(currentStudent);
+        Metar metar = metars.get(i);
+        metarViewHolder.metarListItemBinding.setMetar(metar);
+        metarViewHolder.metarListItemBinding.setViewModel(viewModel);
+
     }
 
     @Override
@@ -76,7 +86,7 @@ public class MetarDataAdapter
     public static void getStationNameByID(@NonNull TextView view, Station s) {
         if (s == null)
             return;
-        String str = (s.country != null ? s.country : "").concat(" ").concat(s.state != null ? s.state : "").concat(" ").concat(s.site != null ? s.site : "");
+        String str = (s.country != null ? s.country : "").concat(" ").concat(s.site != null ? s.site : "");
         view.setText(str);
     }
 }

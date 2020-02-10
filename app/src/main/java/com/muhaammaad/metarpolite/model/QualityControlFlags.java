@@ -4,13 +4,16 @@ package com.muhaammaad.metarpolite.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class QualityControlFlags {
+import java.io.Serializable;
 
-    @SerializedName("auto")
-    @Expose
+public class QualityControlFlags implements Serializable {
+
     public String auto;
-    @SerializedName("no_signal")
-    @Expose
     public String noSignal;
-
+    public String autoStation;
+    public String corrected;
+    public String maintenanceIndicator;
+    public String lightningSensorOff;
+    public String freezingRainSensorOff;
+    public String presentWeatherSensorOff;
 }

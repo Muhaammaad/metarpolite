@@ -5,8 +5,10 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "Station", indices = {@Index(value = {"stationId"}, unique = true)})
-public class Station {
+public class Station implements Serializable {
     @NonNull
     @PrimaryKey
     public String stationId;
@@ -35,7 +37,7 @@ public class Station {
     }
 
     public String getCountry() {
-        return country;
+        return country != null ? country : "";
     }
 
     public void setCountry(String country) {
@@ -43,7 +45,7 @@ public class Station {
     }
 
     public String getSite() {
-        return site;
+        return site != null ? site : "";
     }
 
     public void setSite(String site) {
@@ -59,7 +61,7 @@ public class Station {
     }
 
     public String getState() {
-        return state;
+        return state != null ? state : "";
     }
 
     public void setState(String state) {

@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".ui.main.view.MainActivity"
-            tools:showIn="@layout/main_fragment">
+            tools:showIn="@layout/fragment_metar_list">
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvMetars"

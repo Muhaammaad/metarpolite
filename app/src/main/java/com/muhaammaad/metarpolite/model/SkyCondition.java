@@ -4,7 +4,9 @@ package com.muhaammaad.metarpolite.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SkyCondition {
+import java.io.Serializable;
+
+public class SkyCondition implements Serializable {
 
     @SerializedName("cloud_base_ft_agl")
     @Expose
@@ -13,4 +15,11 @@ public class SkyCondition {
     @Expose
     public String skyCover;
 
+    @Override
+    public String toString() {
+        return "SkyCondition{" +
+                "cloudBaseFtAgl='" + cloudBaseFtAgl + '\'' +
+                ", skyCover='" + skyCover + '\'' +
+                '}';
+    }
 }

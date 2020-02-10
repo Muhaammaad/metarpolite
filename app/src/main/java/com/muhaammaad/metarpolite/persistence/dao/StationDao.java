@@ -18,6 +18,6 @@ public interface StationDao extends BaseDao<Station> {
     @Query("SELECT * FROM Station")
     List<StationsAndMetars> getStationsAndMetars();
 
-    @Query("SELECT * FROM Station")
+    @Query("SELECT * FROM Station ORDER BY stationId DESC")
     List<Station> getStations();
 }

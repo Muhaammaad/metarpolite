@@ -2,11 +2,16 @@
 package com.muhaammaad.metarpolite.persistence.entity;
 
 import androidx.annotation.NonNull;
-import androidx.room.*;
-import com.muhaammaad.metarpolite.global.util.TimeUtil;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
 import com.muhaammaad.metarpolite.model.QualityControlFlags;
 import com.muhaammaad.metarpolite.model.SkyCondition;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +71,7 @@ import java.util.List;
  */
 
 @Entity(tableName = "Metar", indices = {@Index(value = {"rawText"}, unique = true)})
-public class Metar {
+public class Metar implements Serializable {
 
     @NonNull
     @PrimaryKey(autoGenerate = true)

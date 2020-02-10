@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+                name="viewModel"
+                type="com.muhaammaad.metarpolite.ui.main.viewmodel.MetarDetailViewModel" />
+
+    </data>
+
+    <ScrollView
+            android:id="@+id/mainView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/cvStation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    bind:layout_constraintEnd_toEndOf="parent"
+                    bind:layout_constraintStart_toStartOf="parent"
+                    bind:layout_constraintTop_toTopOf="parent"
+                    card_view:cardCornerRadius="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp">
+
+                    <TextView
+                            android:id="@+id/tvStationTime"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="end"
+                            android:text="@{viewModel.metar.time}"
+                            android:textSize="12sp"
+                            bind:layout_constraintEnd_toEndOf="parent"
+                            bind:layout_constraintStart_toEndOf="@+id/tvStationLabel"
+                            bind:layout_constraintTop_toTopOf="parent"
+                            tools:text="Time" />
+
+                    <TextView
+                            android:id="@+id/tvStationLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Station"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="12sp"
+                            bind:layout_constraintStart_toStartOf="parent"
+                            bind:layout_constraintTop_toTopOf="parent"
+                            tools:text="Station" />
+                    <!--                    public String elevation;-->
+                    <!--                    public String country;-->
+                    <!--                    public String site;-->
+                    <!--                    public String latitude;-->
+                    <!--                    public String state;-->
+                    <!--                    public String longitude;-->
+                    <TextView
+                            android:id="@+id/tvStationId"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@{viewModel.metar.station.stationId}"
+                            android:textSize="18sp"
+                            bind:layout_constraintEnd_toEndOf="parent"
+                            bind:layout_constraintStart_toStartOf="parent"
+                            bind:layout_constraintTop_toBottomOf="@+id/tvStationLabel"
+                            tools:text="StationId" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            bind:layout_constraintStart_toStartOf="parent"
+                            bind:layout_constraintTop_toBottomOf="@+id/tvStationId">
+
+                        <TextView
+                                android:id="@+id/tvSiteLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Site"
+                                bind:layout_constraintStart_toStartOf="parent"
+                                bind:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                                android:id="@+id/tvCountryLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Country"
+                                bind:layout_constraintStart_toStartOf="parent"
+                                bind:layout_constraintTop_toBottomOf="@+id/tvSiteLabel" />
+
+                        <TextView
+                                android:id="@+id/tvlatitudeLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Latitude"
+                                bind:layout_constraintStart_toStartOf="parent"
+                                bind:layout_constraintTop_toBottomOf="@+id/tvCountryLabel" />
+
+                        <TextView
+                                android:id="@+id/tvLongitudeLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Longitude"
+                                bind:layout_constraintStart_toStartOf="parent"
+                                bind:layout_constraintTop_toBottomOf="@+id/tvlatitudeLabel" />
+
+                        <TextView
+                                android:id="@+id/tvElevationLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Elevation"
+                                bind:layout_constraintStart_toStartOf="parent"
+                                bind:layout_constraintTop_toBottomOf="@+id/tvLongitudeLabel" />
+
+                        <androidx.constraintlayout.widget.Barrier
+                                android:id="@+id/barrierStation"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                bind:barrierDirection="end"
+                                bind:constraint_referenced_ids="tvSiteLabel,tvCountryLabel,tvlatitudeLabel,tvLongitudeLabel,tvElevationLabel" />
+
+                        <View
+                                android:id="@+id/seperatorStation"
+                                android:layout_width="10dp"
+                                android:layout_height="0dp"
+                                bind:layout_constraintBottom_toBottomOf="parent"
+                                bind:layout_constraintStart_toEndOf="@+id/barrierStation"
+                                bind:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                                android:id="@+id/tvSiteValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.metar.station.site}"
+                                bind:layout_constraintStart_toEndOf="@+id/seperatorStation"
+                                bind:layout_constraintTop_toTopOf="@+id/tvSiteLabel" />
+
+                        <TextView
+                                android:id="@+id/tvCountryValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.metar.station.country}"
+                                bind:layout_constraintStart_toEndOf="@+id/seperatorStation"
+                                bind:layout_constraintTop_toTopOf="@+id/tvCountryLabel" />
+
+                        <TextView
+                                android:id="@+id/tvLatitudeValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.metar.station.latitude}"
+                                bind:layout_constraintStart_toEndOf="@+id/seperatorStation"
+                                bind:layout_constraintTop_toTopOf="@+id/tvlatitudeLabel" />
+
+                        <TextView
+                                android:id="@+id/tvLongitudeValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.metar.station.longitude}"
+                                bind:layout_constraintStart_toEndOf="@+id/seperatorStation"
+                                bind:layout_constraintTop_toTopOf="@+id/tvLongitudeLabel" />
+
+                        <TextView
+                                android:id="@+id/tvElevationValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.metar.station.elevation}"
+                                bind:layout_constraintStart_toEndOf="@+id/seperatorStation"
+                                bind:layout_constraintTop_toTopOf="@+id/tvElevationLabel" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/cvMetar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    bind:layout_constraintBottom_toBottomOf="parent"
+                    bind:layout_constraintEnd_toEndOf="parent"
+                    bind:layout_constraintStart_toStartOf="parent"
+                    bind:layout_constraintTop_toBottomOf="@+id/cvStation"
+                    card_view:cardCornerRadius="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp">
+
+                    <TextView
+                            android:id="@+id/tvCategory"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@color/colorPrimary"
+                            android:padding="5dp"
+                            android:text="@{viewModel.metar.flightCategory}"
+                            android:textColor="@android:color/white"
+                            android:textSize="12sp"
+                            bind:layout_constraintEnd_toEndOf="parent"
+                            bind:layout_constraintTop_toTopOf="parent"
+                            tools:text="Metar Category" />
+
+                    <TextView
+                            android:id="@+id/tvRawLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:gravity="center"
+                            android:text="Raw Metar"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="12sp"
+                            bind:layout_constraintBottom_toBottomOf="@+id/tvCategory"
+                            bind:layout_constraintStart_toStartOf="parent"
+                            bind:layout_constraintTop_toTopOf="@+id/tvCategory"
+                            tools:text="Raw Metar" />
+
+                    <TextView
+                            android:id="@+id/tvRawDescription"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@{viewModel.metar.rawText}"
+                            android:textSize="18sp"
+                            bind:layout_constraintEnd_toEndOf="parent"
+                            bind:layout_constraintStart_toStartOf="parent"
+                            bind:layout_constraintTop_toBottomOf="@+id/tvRawLabel"
+                            tools:text="RAW Description" />
+
+
+                    <TextView
+                            android:id="@+id/tvDecodedLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Metar Detail"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="12sp"
+                            bind:layout_constraintStart_toStartOf="parent"
+                            bind:layout_constraintTop_toBottomOf="@+id/tvRawDescription"
+                            tools:text="Metar Detail" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            bind:layout_constraintStart_toStartOf="parent"
+                            bind:layout_constraintTop_toBottomOf="@+id/tvDecodedLabel">
+
+                        <TextView
+                                android:id="@+id/tvWindLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:text="Wind"
+                                bind:layout_constraintStart_toStartOf="parent"
+                                bind:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                                android:id="@+id/tvTempLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Temperature"
+                                bind:layout_constraintStart_toStartOf="parent"
+                                bind:layout_constraintTop_toBottomOf="@+id/tvWindLabel" />
+
+                        <TextView
+                                android:id="@+id/tvVisibilityLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Visibility"
+                                bind:layout_constraintStart_toStartOf="parent"
+                                bind:layout_constraintTop_toBottomOf="@+id/tvTempLabel" />
+
+                        <TextView
+                                android:id="@+id/tvSkyLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Sky Conditions"
+                                android:visibility="@{viewModel.metar.skyCondition.empty ? View.GONE : View.VISIBLE}"
+                                bind:layout_constraintStart_toStartOf="parent"
+                                bind:layout_constraintTop_toBottomOf="@+id/tvVisibilityLabel" />
+
+                        <TextView
+                                android:id="@+id/tvDewLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Dew Point"
+                                bind:layout_constraintStart_toStartOf="parent"
+                                bind:layout_constraintTop_toBottomOf="@+id/tvSkyLabel" />
+
+                        <TextView
+                                android:id="@+id/tvPressureLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Pressure"
+                                bind:layout_constraintStart_toStartOf="parent"
+                                bind:layout_constraintTop_toBottomOf="@+id/tvDewLabel" />
+
+                        <androidx.constraintlayout.widget.Barrier
+                                android:id="@+id/barrierMetar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                bind:barrierDirection="end"
+                                bind:constraint_referenced_ids="tvWindLabel,tvTempLabel,tvVisibilityLabel,tvSkyLabel,tvDewLabel,tvPressureLabel" />
+
+                        <View
+                                android:id="@+id/seperatorMetar"
+                                android:layout_width="2dp"
+                                android:layout_height="0dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                bind:layout_constraintBottom_toBottomOf="parent"
+                                bind:layout_constraintStart_toEndOf="@+id/barrierMetar"
+                                bind:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                                android:id="@+id/tvWindValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.metar.windDirDegrees.concat(@string/space).concat(viewModel.metar.windSpeedKt).concat(@string/space).concat(viewModel.metar.windDirDegrees)}"
+                                bind:layout_constraintStart_toEndOf="@+id/seperatorMetar"
+                                bind:layout_constraintTop_toTopOf="@+id/tvWindLabel" />
+
+                        <TextView
+                                android:id="@+id/tvTempValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.metar.tempC}"
+                                bind:layout_constraintStart_toEndOf="@+id/seperatorMetar"
+                                bind:layout_constraintTop_toTopOf="@+id/tvTempLabel" />
+
+                        <TextView
+                                android:id="@+id/tvVisibilityValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.metar.visibilityStatuteMi}"
+                                bind:layout_constraintStart_toEndOf="@+id/seperatorMetar"
+                                bind:layout_constraintTop_toTopOf="@+id/tvVisibilityLabel" />
+
+                        <TextView
+                                android:id="@+id/tvSkyValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.metar.skyCondition.empty ? @string/space : viewModel.metar.skyCondition.get(0).toString()}"
+                                android:visibility="@{viewModel.metar.skyCondition.empty ? View.GONE : View.VISIBLE}"
+                                bind:layout_constraintStart_toEndOf="@+id/seperatorMetar"
+                                bind:layout_constraintTop_toTopOf="@+id/tvSkyLabel" />
+
+                        <TextView
+                                android:id="@+id/tvDewValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.metar.dewpointC}"
+                                bind:layout_constraintStart_toEndOf="@+id/seperatorMetar"
+                                bind:layout_constraintTop_toTopOf="@+id/tvDewLabel" />
+
+                        <TextView
+                                android:id="@+id/tvPressureValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.metar.altimInHg}"
+                                bind:layout_constraintStart_toEndOf="@+id/seperatorMetar"
+                                bind:layout_constraintTop_toTopOf="@+id/tvPressureLabel" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

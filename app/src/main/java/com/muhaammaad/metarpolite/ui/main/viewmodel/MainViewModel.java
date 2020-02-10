@@ -7,6 +7,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableArrayList;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 import com.muhaammaad.metarpolite.model.type.CountryType;
 import com.muhaammaad.metarpolite.model.type.DataSourceType;
@@ -35,6 +36,8 @@ public class MainViewModel extends AndroidViewModel implements Observer<Aviation
     //region Globar Members
 //    private AviationData mAviationResponse = new AviationData(); // Overall aviation data responsible object
     public ObservableArrayList<Metar> mMetars = new ObservableArrayList<>(); // metars to be displayed data responsible list object
+    public MutableLiveData<Metar> metarClickLivedata = new MutableLiveData();
+
     //endregion
     //region Constructors
 
@@ -108,6 +111,12 @@ public class MainViewModel extends AndroidViewModel implements Observer<Aviation
     public void onComplete() {
 
     }
+
+    public void onClickMetar(Metar m) {
+        metarClickLivedata.setValue(m);
+    }
+
+
     //endregion
 }
 
