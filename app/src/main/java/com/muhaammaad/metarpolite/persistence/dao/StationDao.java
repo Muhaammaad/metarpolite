@@ -1,5 +1,6 @@
 package com.muhaammaad.metarpolite.persistence.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
 import androidx.room.Transaction;
@@ -19,5 +20,5 @@ public interface StationDao extends BaseDao<Station> {
     List<StationsAndMetars> getStationsAndMetars();
 
     @Query("SELECT * FROM Station ORDER BY stationId DESC")
-    List<Station> getStations();
+    LiveData<List<Station>> getStations();
 }

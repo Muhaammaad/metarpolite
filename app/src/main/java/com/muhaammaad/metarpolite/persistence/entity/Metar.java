@@ -8,12 +8,14 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import com.muhaammaad.metarpolite.model.QualityControlFlags;
-import com.muhaammaad.metarpolite.model.SkyCondition;
+import com.muhaammaad.metarpolite.global.util.TimeUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.concurrent.TimeUnit.DAYS;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * Field #	Field Name	Description	Field Type	Units
@@ -98,8 +100,12 @@ public class Metar implements Serializable {
     @Ignore
     public List<SkyCondition> skyCondition = new ArrayList<>();
 
+    public String getTimeDuration() {
+        return TimeUtil.formatMillis(observationTime, DAYS, SECONDS);
+    }
+
     public String getTime() {
-        return observationTime;//"" + TimeUtil.getMillies(observationTime);
+        return TimeUtil.formatMillis(observationTime);
     }
 
     @Override
@@ -120,7 +126,29 @@ public class Metar implements Serializable {
                 ", windGustKt='" + windGustKt + '\'' +
                 ", wxString='" + wxString + '\'' +
                 '}';
+    }
 
-
+    public String getSkyConditionDescription() {
+        if (skyCondition.isEmpty())
+            return "";
+        SkyCondition contion = skyCondition.get(0);
+        switch (contion.skyCover) {
+            case "SKC":
+            case "CLR":
+                return "Clear";
+            case "FEW":
+            case "CAVOK":
+                return "Few Clouds";
+            case "SCT":
+                return "Partially Cloudy";
+            case "BKN":
+                return "Cloudy";
+            case "OVC":
+                return "Overcast - Completely Cloudy";
+            case "OVX":
+                return "Obscured";
+            default:
+                return "";
+        }
     }
 }

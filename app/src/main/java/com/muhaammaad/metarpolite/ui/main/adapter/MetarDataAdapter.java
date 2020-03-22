@@ -9,13 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.muhaammaad.metarpolite.R;
 import com.muhaammaad.metarpolite.databinding.MetarListItemBinding;
+import com.muhaammaad.metarpolite.global.callback.ClickListener;
 import com.muhaammaad.metarpolite.persistence.entity.Metar;
 import com.muhaammaad.metarpolite.persistence.entity.Station;
-import com.muhaammaad.metarpolite.ui.main.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
 //endregion
@@ -28,10 +29,10 @@ public class MetarDataAdapter
 
     //region Global members
     private ArrayList<Metar> metars;
-    private MainViewModel viewModel;
+    private ClickListener listener;
 
-    public MetarDataAdapter(MainViewModel context) {
-        viewModel = context;
+    public MetarDataAdapter(Fragment context) {
+        listener = (ClickListener) context;
     }
     //endregion
 
@@ -48,7 +49,7 @@ public class MetarDataAdapter
     public void onBindViewHolder(@NonNull MetarViewHolder metarViewHolder, int i) {
         Metar metar = metars.get(i);
         metarViewHolder.metarListItemBinding.setMetar(metar);
-        metarViewHolder.metarListItemBinding.setViewModel(viewModel);
+        metarViewHolder.metarListItemBinding.setListener(listener);
 
     }
 
@@ -65,9 +66,9 @@ public class MetarDataAdapter
     /**
      * View holder responsible for metar item binding
      */
-    class MetarViewHolder extends RecyclerView.ViewHolder {
+    public class MetarViewHolder extends RecyclerView.ViewHolder {
 
-        private MetarListItemBinding metarListItemBinding;
+        public MetarListItemBinding metarListItemBinding;
 
         MetarViewHolder(@NonNull MetarListItemBinding metartListItemBinding) {
             super(metartListItemBinding.getRoot());

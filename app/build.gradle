@@ -1,67 +1,72 @@
 apply plugin: 'com.android.application'
 
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
-
 android {
-    compileSdkVersion 29
+    compileSdkVersion mCompileSdkVersion
     defaultConfig {
-        applicationId "com.muhaammaad.metarpolite"
-        minSdkVersion 15
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId mApplicationId
+        minSdkVersion mMinSDKVersion
+        targetSdkVersion mTargetSDKVersion
+        versionCode mVersionCode
+        versionName mVersionName
+        testInstrumentationRunner AndroidJUnitRunner
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled mMinifyEnable
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     dataBinding {
-        enabled = true
+        enabled = mDataBinding
     }
     compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
+        sourceCompatibility = mSourceCompatibility
+        targetCompatibility = mTargetCompatibility
+    }
+    testOptions {
+        unitTests.returnDefaultValues = mReturnDefaultValues
     }
 }
 
 dependencies {
-    def roomVersion = "2.2.3"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    //region Androidx
+    implementation androidx.appcompat
+    implementation androidx.core
+    implementation androidx.constraintlayout
+    implementation androidx.lifecycle
+    implementation androidx.recyclerview
+    implementation androidx.cardview
+    implementation androidx.work_runtime
+    implementation androidx.work_testing
+    implementation androidx_test.espresso_idling
+    annotationProcessor androidx.lifecycle_compiler
+    //endregion Androix
 
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+    //region Testing
+    testImplementation androidx_test.junit
+    androidTestImplementation androidx_test.junit_ext
+    androidTestImplementation androidx_test.core
+    androidTestImplementation androidx_test.runner
+    androidTestImplementation androidx_test.espresso_core
+    androidTestImplementation androidx_test.espresso_contrib
+    //endregion testing
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //region Room
+    implementation androidx_room.runtime
+    implementation androidx_room.rxjava
+    annotationProcessor androidx_room.compiler
+    //endregion Room
 
-    //region Room Dependencies
-    implementation "androidx.room:room-runtime:$roomVersion"
-    implementation "androidx.room:room-rxjava2:$roomVersion"
-    annotationProcessor "androidx.room:room-compiler:$roomVersion"
-    //endregion
-
-    //region Network Libs
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
-    implementation "com.squareup.retrofit2:converter-simplexml:2.5.0"
-    implementation 'javax.annotation:javax.annotation-api:1.2'
-    implementation 'com.google.code.gson:gson:2.8.5'
-    //endregion
-    implementation 'com.google.code.gson:gson:2.8.6'
+    //region Network
+    implementation okhttp3.logging_intercepter
+    implementation reactivex.rxandroid
+    implementation reactivex.rxjava
+    implementation retrofit2.adapter
+    implementation retrofit2.converter_gson
+    implementation retrofit2.converter_xml
+    implementation javax.annotation
+    implementation google.gson
+    //endregion Network
 }

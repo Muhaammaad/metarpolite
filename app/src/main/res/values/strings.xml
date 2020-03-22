@@ -1,6 +1,21 @@
 <resources>
     <string name="app_name">Metarpolite</string>
+    <string name="degree">\u00B0</string>
+    <string name="alti_unit">hPa</string>
     <string name="space">\u0020</string>
-    <string name="temp"> `C</string>
+    <string name="temp"> \u2103</string>
     <string name="kt"> kt</string>
+    <string name="station">Station</string>
+    <string name="site">Site</string>
+    <string name="country">Country</string>
+    <string name="latitude">Latitude</string>
+    <string name="raw_metar">Raw Metar</string>
+    <string name="longitude">Longitude</string>
+    <string name="elevation">Elevation</string>
+    <string name="wind">Wind</string>
+    <string name="temperature">Temperature</string>
+    <string name="visibility">Visibility</string>
+    <string name="sky_conditions">Sky Conditions</string>
+    <string name="dew_point">Dew Point</string>
+    <string name="pressure">Pressure</string>
 </resources>

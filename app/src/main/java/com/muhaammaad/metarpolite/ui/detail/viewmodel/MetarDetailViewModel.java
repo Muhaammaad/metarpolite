@@ -1,4 +1,4 @@
-package com.muhaammaad.metarpolite.ui.main.viewmodel;
+package com.muhaammaad.metarpolite.ui.detail.viewmodel;
 
 import android.app.Application;
 

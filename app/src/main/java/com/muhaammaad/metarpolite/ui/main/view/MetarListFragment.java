@@ -9,14 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.BindingAdapter;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.muhaammaad.metarpolite.R;
 import com.muhaammaad.metarpolite.databinding.FragmentMetarListBinding;
+import com.muhaammaad.metarpolite.global.IdlingResource.SimpleIdlingResource;
+import com.muhaammaad.metarpolite.global.callback.ClickListener;
 import com.muhaammaad.metarpolite.persistence.entity.Metar;
-import com.muhaammaad.metarpolite.ui.main.MetarDetailActivity;
+import com.muhaammaad.metarpolite.ui.detail.view.MetarDetailActivity;
 import com.muhaammaad.metarpolite.ui.main.adapter.MetarDataAdapter;
 import com.muhaammaad.metarpolite.ui.main.viewmodel.MainViewModel;
 
@@ -25,12 +28,12 @@ import java.util.ArrayList;
 /**
  * Fragment responsible to show list of metars
  */
-public class MetarListFragment extends Fragment {
+public class MetarListFragment extends Fragment implements ClickListener<Metar> {
 
     /**
      * return a new object of the fragment.
      */
-    public static MetarListFragment newInstance() {
+    static MetarListFragment newInstance() {
         return new MetarListFragment();
     }
 
@@ -42,7 +45,7 @@ public class MetarListFragment extends Fragment {
         //region Configure binder and viewModel
         FragmentMetarListBinding binder = FragmentMetarListBinding.bind(inflater.inflate(R.layout.fragment_metar_list, container, false));
         MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        MetarDataAdapter metarDataAdapter = new MetarDataAdapter(mainViewModel);
+        MetarDataAdapter metarDataAdapter = new MetarDataAdapter(this);
         binder.setViewModel(mainViewModel);
         //endregion
         //region Bind RecyclerView
@@ -51,13 +54,13 @@ public class MetarListFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(metarDataAdapter);
 
-        mainViewModel.metarClickLivedata.observe(getViewLifecycleOwner(), metar -> showMetarDetailsActivity(metar));
+        mainViewModel.loading.observe(getViewLifecycleOwner(), aBoolean -> ((SimpleIdlingResource.IdlingDelegate) getActivity()).setIdleState(!aBoolean));
         //endregion
         return binder.getRoot();
     }
 
     private void showMetarDetailsActivity(Metar metar) {
-        MetarDetailActivity.openActivity(getActivity(),metar);
+        MetarDetailActivity.openActivity(getActivity(), metar);
     }
 
     /**
@@ -73,6 +76,11 @@ public class MetarListFragment extends Fragment {
             return;
         adapter.setMetars(metars);
         adapter.notifyDataSetChanged();
+
     }
 
+    @Override
+    public void onclick(Metar metar) {
+        showMetarDetailsActivity(metar);
+    }
 }

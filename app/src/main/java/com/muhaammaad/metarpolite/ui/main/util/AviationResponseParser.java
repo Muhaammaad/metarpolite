@@ -2,8 +2,8 @@ package com.muhaammaad.metarpolite.ui.main.util;
 
 import android.util.Xml;
 
-import com.muhaammaad.metarpolite.model.QualityControlFlags;
-import com.muhaammaad.metarpolite.model.SkyCondition;
+import com.muhaammaad.metarpolite.persistence.entity.QualityControlFlags;
+import com.muhaammaad.metarpolite.persistence.entity.SkyCondition;
 import com.muhaammaad.metarpolite.persistence.AviationData;
 import com.muhaammaad.metarpolite.persistence.entity.Metar;
 import com.muhaammaad.metarpolite.persistence.entity.Station;
@@ -58,7 +58,7 @@ public class AviationResponseParser {
      * Parses the contents of Data tag. If it encounters a Metar or Station tag, hands them off
      * to "read" method for processing and save the result. Otherwise, skips the tag.
      */
-    private static void readData(XmlPullParser parser, AviationData aviationResponse) throws XmlPullParserException, IOException {
+    public static void readData(XmlPullParser parser, AviationData aviationResponse) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, TAG_DATA);
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -82,7 +82,7 @@ public class AviationResponseParser {
     /**
      * Parses the contents of Metar tag and returns Metar. Take wanted tags otherwise skip the unwanted ones.
      */
-    private static Metar readMETAR(XmlPullParser parser, String TAG) throws XmlPullParserException, IOException {
+    public static Metar readMETAR(XmlPullParser parser, String TAG) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, TAG);
         Metar metar = new Metar();
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -212,7 +212,7 @@ public class AviationResponseParser {
     /**
      * Parses the contents of Station tag and returns station. Take wanted tags otherwise skip the unwanted ones.
      */
-    private static Station readStation(XmlPullParser parser, String TAG) throws XmlPullParserException, IOException {
+    public static Station readStation(XmlPullParser parser, String TAG) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, TAG);
         Station station = new Station();
         while (parser.next() != XmlPullParser.END_TAG) {
