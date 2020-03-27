@@ -59,6 +59,13 @@ dependencies {
     annotationProcessor androidx_room.compiler
     //endregion Room
 
+    //region Dagger
+    implementation google.dagger
+    annotationProcessor google.dagger_compiler
+    implementation google.dagger_support
+    annotationProcessor google.dagger_processor
+    //endregion Dagger
+
     //region Network
     implementation okhttp3.logging_intercepter
     implementation reactivex.rxandroid

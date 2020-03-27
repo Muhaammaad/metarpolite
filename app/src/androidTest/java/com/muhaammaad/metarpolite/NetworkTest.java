@@ -2,12 +2,12 @@ package com.muhaammaad.metarpolite;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.muhaammaad.metarpolite.di.module.NetworkModule;
 import com.muhaammaad.metarpolite.model.type.CountryType;
 import com.muhaammaad.metarpolite.model.type.DataSourceType;
 import com.muhaammaad.metarpolite.model.type.FormatType;
 import com.muhaammaad.metarpolite.model.type.RequestType;
 import com.muhaammaad.metarpolite.network.NetworkApi;
-import com.muhaammaad.metarpolite.network.NetworkModule;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,9 +34,9 @@ public class NetworkTest {
 
     @Before
     public void beforeTest() {
-        apiManager = NetworkModule.getInstance().provideNetworkApi();
+        NetworkModule api = new NetworkModule();
+        apiManager = api.provideNetworkApi();
     }
-
 
     @Test
     public void retrieveMetarsTest() throws InterruptedException {

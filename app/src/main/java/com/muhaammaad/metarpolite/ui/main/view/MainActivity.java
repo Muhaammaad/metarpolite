@@ -11,10 +11,12 @@ import androidx.test.espresso.IdlingResource;
 import com.muhaammaad.metarpolite.R;
 import com.muhaammaad.metarpolite.global.IdlingResource.SimpleIdlingResource;
 
+import dagger.android.support.DaggerAppCompatActivity;
+
 /**
  * Launcher Activity responsible to show fragment with list of metars
  */
-public class MainActivity extends AppCompatActivity implements SimpleIdlingResource.IdlingDelegate {
+public class MainActivity extends DaggerAppCompatActivity implements SimpleIdlingResource.IdlingDelegate {
 
     // The Idling Resource which will be null in production.
     @Nullable

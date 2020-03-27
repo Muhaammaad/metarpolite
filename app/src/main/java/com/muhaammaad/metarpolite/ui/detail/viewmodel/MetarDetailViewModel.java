@@ -2,17 +2,19 @@ package com.muhaammaad.metarpolite.ui.detail.viewmodel;
 
 import android.app.Application;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.muhaammaad.metarpolite.persistence.entity.Metar;
 
+import javax.inject.Inject;
+
 public class MetarDetailViewModel extends AndroidViewModel {
 
     public ObservableField<Metar> metar = new ObservableField<>();
 
-    public MetarDetailViewModel(@NonNull Application application) {
+    @Inject
+    public MetarDetailViewModel(Application application) {
         super(application);
     }
 

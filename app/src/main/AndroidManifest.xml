@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         package="com.muhaammaad.metarpolite">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,10 +11,10 @@
 
 
     <application
+            android:name=".global.MyApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:name=".global.MyApplication"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
@@ -26,22 +27,12 @@
             </intent-filter>
         </activity>
 
-        <receiver
-                android:name=".manager.AlarmReceiver"
-                android:enabled="true"
-                android:exported="true">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </receiver>
+        <!--        To provide your own configuration, you must first remove the default initializer.-->
 
-        <receiver
-                android:name=".manager.DeviceBootReceiver"
-                android:enabled="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
+        <provider
+                android:name="androidx.work.impl.WorkManagerInitializer"
+                android:authorities="${applicationId}.workmanager-init"
+                tools:node="remove" />
     </application>
 
 </manifest>

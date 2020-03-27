@@ -8,14 +8,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.BindingAdapter;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.muhaammaad.metarpolite.R;
 import com.muhaammaad.metarpolite.databinding.FragmentMetarListBinding;
+import com.muhaammaad.metarpolite.di.factory.ViewModelFactory;
 import com.muhaammaad.metarpolite.global.IdlingResource.SimpleIdlingResource;
 import com.muhaammaad.metarpolite.global.callback.ClickListener;
 import com.muhaammaad.metarpolite.persistence.entity.Metar;
@@ -25,10 +24,15 @@ import com.muhaammaad.metarpolite.ui.main.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerFragment;
+
+
 /**
  * Fragment responsible to show list of metars
  */
-public class MetarListFragment extends Fragment implements ClickListener<Metar> {
+public class MetarListFragment extends DaggerFragment implements ClickListener<Metar> {
 
     /**
      * return a new object of the fragment.
@@ -37,6 +41,9 @@ public class MetarListFragment extends Fragment implements ClickListener<Metar> 
         return new MetarListFragment();
     }
 
+    @Inject
+    ViewModelFactory viewModelFactory;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -44,7 +51,7 @@ public class MetarListFragment extends Fragment implements ClickListener<Metar> 
 
         //region Configure binder and viewModel
         FragmentMetarListBinding binder = FragmentMetarListBinding.bind(inflater.inflate(R.layout.fragment_metar_list, container, false));
-        MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        MainViewModel mainViewModel = new ViewModelProvider(this, viewModelFactory).get(MainViewModel.class);
         MetarDataAdapter metarDataAdapter = new MetarDataAdapter(this);
         binder.setViewModel(mainViewModel);
         //endregion

@@ -76,7 +76,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public class Metar implements Serializable {
 
     @NonNull
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "id")
     public long id;
     public String rawText;

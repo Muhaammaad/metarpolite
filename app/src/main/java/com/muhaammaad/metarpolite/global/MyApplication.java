@@ -1,28 +1,50 @@
 package com.muhaammaad.metarpolite.global;
 
+import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 
+import androidx.work.Configuration;
+import androidx.work.WorkManager;
+
+import com.muhaammaad.metarpolite.di.AppInjector;
+import com.muhaammaad.metarpolite.di.factory.SimpleWorkerFactory;
 import com.muhaammaad.metarpolite.manager.MetarFetcher;
+
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
 
 /**
  * Application Class
  */
-public class MyApplication extends Application {
-    private static MyApplication instance;
+public class MyApplication extends Application implements HasActivityInjector {
 
-    public static MyApplication getInstance() {
-        return instance;
-    }
+    @Inject
+    protected DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
 
-    public static Context getContext() {
-        return instance;
-    }
+    @Inject
+    SimpleWorkerFactory factory;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
+        AppInjector.init(this);
+        configureWorkManager();
         MetarFetcher.setWork(this);
+    }
+
+    private void configureWorkManager() {
+        Configuration config = new Configuration.Builder()
+                .setWorkerFactory(factory)
+                .build();
+
+        WorkManager.initialize(this, config);
+    }
+
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return dispatchingAndroidInjector;
     }
 }

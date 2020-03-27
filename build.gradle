@@ -30,8 +30,8 @@ ext {
     mMinifyEnable = true
     mDataBinding = true
     mReturnDefaultValues = true
-    mSourceCompatibility = '1.8'
-    mTargetCompatibility = '1.8'
+    mSourceCompatibility = JavaVersion.VERSION_1_8
+    mTargetCompatibility = JavaVersion.VERSION_1_8
     AndroidJUnitRunner = "androidx.test.runner.AndroidJUnitRunner"
     //endregion
     //region Libraries Versions
@@ -56,6 +56,7 @@ ext {
     testExtJunitVersion = "1.1.2-alpha05"
     coreTestingVersion = "2.1.0"
     runnerVersion = "1.2.0"
+    daggerVersion = '2.16'
     //endregion Libraries Versions
     //region Libraries list
 
@@ -113,7 +114,12 @@ ext {
     ]
 
     google = [
-            gson: "com.google.code.gson:gson:$gsonVersion"
+            gson            : "com.google.code.gson:gson:$gsonVersion",
+            dagger          : "com.google.dagger:dagger:$daggerVersion",
+            dagger_compiler : "com.google.dagger:dagger-compiler:$daggerVersion",
+            dagger_support  : "com.google.dagger:dagger-android-support:$daggerVersion",
+            dagger_processor: "com.google.dagger:dagger-android-processor:$daggerVersion"
+
     ]
     //endregion Libraries list
 }

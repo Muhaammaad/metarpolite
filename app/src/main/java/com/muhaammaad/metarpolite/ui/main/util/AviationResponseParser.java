@@ -2,18 +2,17 @@ package com.muhaammaad.metarpolite.ui.main.util;
 
 import android.util.Xml;
 
+import com.muhaammaad.metarpolite.global.util.InputStreamUtil;
+import com.muhaammaad.metarpolite.model.AviationData;
+import com.muhaammaad.metarpolite.persistence.entity.Metar;
 import com.muhaammaad.metarpolite.persistence.entity.QualityControlFlags;
 import com.muhaammaad.metarpolite.persistence.entity.SkyCondition;
-import com.muhaammaad.metarpolite.persistence.AviationData;
-import com.muhaammaad.metarpolite.persistence.entity.Metar;
 import com.muhaammaad.metarpolite.persistence.entity.Station;
-import com.muhaammaad.metarpolite.persistence.repo.AviationRepo;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import static com.muhaammaad.metarpolite.global.constant.Constants.AviationResponseTags.TAG_DATA;
 import static com.muhaammaad.metarpolite.global.constant.Constants.AviationResponseTags.TAG_METARS;
@@ -23,21 +22,21 @@ import static com.muhaammaad.metarpolite.global.util.XmlParserUtil.readTag;
 import static com.muhaammaad.metarpolite.global.util.XmlParserUtil.skip;
 
 /**
- * Aviation Api Responses Xml parsing package-private utils
+ * Aviation Api Responses Xml parsing utils
  */
 public class AviationResponseParser {
     /**
      * finds the data tag. If it encounters a data tag, parse it otherwise keep looping
      */
-    public static void parseAviationResponseStream(InputStream inputStream, AviationData aviationResponse) {
-        if (inputStream == null)
+    public static void parseAviationResponse(String response, AviationData aviationResponse) {
+        if (response == null || response.isEmpty())
             return;
         if (aviationResponse == null)
             aviationResponse = new AviationData();
         try {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(inputStream, null);
+            parser.setInput(InputStreamUtil.fromString(response), null);
             while (true) {
                 parser.next();
                 if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -58,7 +57,7 @@ public class AviationResponseParser {
      * Parses the contents of Data tag. If it encounters a Metar or Station tag, hands them off
      * to "read" method for processing and save the result. Otherwise, skips the tag.
      */
-    public static void readData(XmlPullParser parser, AviationData aviationResponse) throws XmlPullParserException, IOException {
+    private static void readData(XmlPullParser parser, AviationData aviationResponse) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, TAG_DATA);
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -67,12 +66,10 @@ public class AviationResponseParser {
             String name = parser.getName();
             if (name.equals(TAG_METARS)) {
                 Metar metar = readMETAR(parser, name);
-                AviationRepo.getInstance().insertMetar(metar);
-                metar.station = aviationResponse.stations.get(metar.stationId);//AviationRepo.getInstance().getStationById(metar.stationId);//aviationResponse.stations.get(metar.stationId);
+                metar.station = aviationResponse.stations.get(metar.stationId);
                 aviationResponse.metars.add(metar);
             } else if (name.equals(TAG_STATIONS)) {
                 Station station = readStation(parser, name);
-//                AviationRepo.getInstance().insertStation(station);
                 aviationResponse.stations.put(station.stationId, station);
             } else skip(parser);
         }
