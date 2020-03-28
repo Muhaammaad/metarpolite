@@ -32,7 +32,7 @@ public class MyApplication extends Application implements HasActivityInjector {
         super.onCreate();
         AppInjector.init(this);
         configureWorkManager();
-        MetarFetcher.setWork(this);
+        MetarFetcher.setPeriodicWork(this);
     }
 
     private void configureWorkManager() {

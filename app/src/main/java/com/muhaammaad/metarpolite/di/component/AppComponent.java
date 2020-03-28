@@ -38,10 +38,9 @@ public interface AppComponent {
 
         Builder appModule(ApplicationModule appModule);
 
-
         AppComponent build();
     }
     SimpleWorkerFactory factory();
 
-    public void inject(MyApplication assignmentApplication);
+    public void inject(MyApplication application);
 }

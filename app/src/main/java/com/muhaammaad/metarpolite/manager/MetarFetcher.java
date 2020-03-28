@@ -1,13 +1,14 @@
 package com.muhaammaad.metarpolite.manager;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import androidx.work.Constraints;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.ListenableWorker;
 import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.Worker;
@@ -28,8 +29,14 @@ import javax.inject.Provider;
  */
 public class MetarFetcher extends Worker {
 
-
     private AviationDataUtil aviationDataUtil;
+
+    @VisibleForTesting
+    public MetarFetcher(
+            @NonNull Context context,
+            @NonNull WorkerParameters params) {
+        super(context, params);
+    }
 
     @Inject
     public MetarFetcher(
@@ -46,8 +53,8 @@ public class MetarFetcher extends Worker {
     @NotNull
     @Override
     public Result doWork() {
-        aviationDataUtil.getAviationDataFromNetwork(null);
-        Log.i(MetarFetcher.class.getName(), "Got Aviation Data");
+        if (aviationDataUtil != null)
+            aviationDataUtil.getAviationDataFromNetwork(null);
         return Result.success();
     }
 
@@ -56,7 +63,7 @@ public class MetarFetcher extends Worker {
      *
      * @param context A {@link Context} for on-demand initialization.
      */
-    public static void setWork(Context context) {
+    public static PeriodicWorkRequest setPeriodicWork(Context context) {
 
         //Constraints for the worker
         Constraints constraints = new Constraints.Builder()
@@ -77,12 +84,20 @@ public class MetarFetcher extends Worker {
         WorkManager.getInstance(context)
                 .enqueueUniquePeriodicWork(MetarFetcher.class.getName(),
                         ExistingPeriodicWorkPolicy.KEEP, request);
-
-//        OneTimeWorkRequest uploadWorkRequest = new OneTimeWorkRequest.Builder(MetarFetcher.class)
-//                .build();
-//        WorkManager.getInstance(context).enqueue(uploadWorkRequest);
+        return request;
     }
 
+    /**
+     * Schedules a Worker to run Once
+     *
+     * @param context A {@link Context} for on-demand initialization.
+     */
+    public static OneTimeWorkRequest setOneTimeWork(Context context) {
+        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(MetarFetcher.class)
+                .build();
+        WorkManager.getInstance(context).enqueue(request);
+        return request;
+    }
 
     public static class Factory implements ChildWorkerFactory {
 

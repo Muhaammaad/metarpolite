@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
                 name="viewModel"
                 type="com.muhaammaad.metarpolite.ui.main.viewmodel.MainViewModel" />
@@ -26,5 +28,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+        <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.showProgress ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/rvMetars"
+                app:layout_constraintEnd_toEndOf="@+id/rvMetars"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/rvMetars" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
